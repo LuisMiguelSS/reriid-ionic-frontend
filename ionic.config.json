@@ -1,5 +1,7 @@
 {
   "name": "reriid-ionic-frontend",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
