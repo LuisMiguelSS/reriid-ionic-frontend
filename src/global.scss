@@ -24,3 +24,37 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+// Avoid "Ignored attempt to cancel a touchstart event..."
+ion-picker, .open_picker {
+    touch-action: none;
+}
+
+// Register & Login
+.auth-form {
+    background-color: white;
+    height: auto;
+    justify-content: center;
+    border-radius: 6px;
+    padding: 10% 2%;
+}
+.auth-logo {
+    width: 70vw;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+.auth-bg {
+    --background: radial-gradient(circle, rgba(345, 81, 97, .1), rgba(345, 81, 97, .2)), url("./assets/images//books-1245690_1920.jpg");
+    background-color: none;
+    background-size: cover;
+    text-align: center;
+    background-blend-mode: multiply;
+}
+
+// General
+.vertically-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
