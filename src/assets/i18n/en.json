@@ -1,0 +1,30 @@
+{
+    "HOME": {
+        "title": "Home"
+    },
+    "AUTH": {
+        "login": "Login",
+        "register": "Register",
+        "username": "Username",
+        "fullname": "Fullname",
+        "select_birthdate": "Select date",
+        "birthdate": "Date of birth",
+        "email": "E-mail",
+        "email_or_username": "E-mail or username",
+        "password": "Password",
+        "password_confirm": "Confirm password",
+        "have_no_account": "Don't have an account?",
+        "have_account": "Already have an account?"
+    },
+    "ERRORS": {
+        "empty": "This cannot be empty!",
+        "invalid_email": "Should be a valid email address. (Eg.: myEmail@site.cool)",
+        "invalid_username": "That username is not valid!",
+        "invalid_length": "Should at least be {{passwordLength}} characters long.",
+        "password_no_match": "Passwords do not match!"
+    },
+    "ACTIONS": {
+        "done": "Done",
+        "cancel": "Cancel"
+    }
+}
