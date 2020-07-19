@@ -1,0 +1,225 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/p/discover"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Post</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button [disabled]="editPostForm.invalid || !images || images.length == 0" (click)="onSubmit()">
+        <ion-icon name="checkmark-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <form novalidate (ngSubmit)="onSubmit()" [formGroup]="editPostForm">
+    <ion-grid>
+      
+      <!-- Book Row -->
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <h2>Book info</h2>
+            <!-- Book Title -->
+            <ion-item>
+
+              <ion-label position="floating">
+                Title
+              </ion-label>
+
+              <ion-input type="text" formControlName="book_title" name="book_title" minlength="5" maxlength="20" [(ngModel)]="postTitle">
+              </ion-input>
+
+              <ion-icon slot="end" class="ion-align-self-center"
+                [color]="editPostForm.get('book_title').valid? 'success' : 'danger'"
+                [name]="editPostForm.get('book_title').valid? 'checkmark-circle-outline' : 'close-outline'">
+              </ion-icon>
+
+            </ion-item>
+            <ion-item lines="none" *ngIf="(editPostForm.get('book_title').hasError('minlength') || editPostForm.get('book_title').hasError('maxlength')  || editPostForm.get('book_title').hasError('required')) && editPostForm.get('book_title').touched">
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('book_title').hasError('required') && editPostForm.get('book_title').touched">
+                Please input a title.
+              </ion-label>
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('book_title').hasError('minlength') && editPostForm.get('book_title').touched">
+                Minimum 5 characters.
+              </ion-label>
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('book_title').hasError('maxlength') && editPostForm.get('book_title').touched">
+                Maximum 20 characters.
+              </ion-label>
+            </ion-item>
+
+            <!-- Book Subtitle -->
+            <ion-item>
+              <ion-label position="floating">Subtitle (optional)</ion-label>
+              <ion-input
+                type="text"
+                formControlName="book_subtitle"
+                name="book_subtitle"
+                [(ngModel)]="postSubtitle"
+              ></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="editPostForm.get('book_subtitle').hasError('maxlength') && editPostForm.get('book_subtitle').touched">
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('book_subtitle').hasError('maxlength') && editPostForm.get('book_subtitle').touched">
+                Maximum 20 characters.
+              </ion-label>
+            </ion-item>
+
+            <!-- Book Synopsis -->
+            <ion-item>
+              <ion-label position="floating">Synopsis (optional)</ion-label>
+              <ion-input
+                type="text"
+                formControlName="book_synopsis"
+                name="book_synopsis"
+                [(ngModel)]="postSynopsis"
+              ></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="editPostForm.get('book_synopsis').hasError('maxlength') && editPostForm.get('book_synopsis').touched">
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('book_synopsis').hasError('maxlength') && editPostForm.get('book_synopsis').touched">
+                Maximum 200 characters.
+              </ion-label>
+            </ion-item>
+
+            <!-- Book ISBN -->
+            <ion-item>
+              <ion-label position="floating">Isbn (optional)</ion-label>
+              <ion-input
+                type="number"
+                formControlName="book_isbn"
+                name="book_isbn"
+                minlength="10"
+                maxlength="13"
+                [(ngModel)]="postIsbn"
+              ></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="(editPostForm.get('book_isbn').hasError('minlength') || editPostForm.get('book_isbn').hasError('maxlength')) && editPostForm.get('book_isbn').touched">
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('book_isbn').hasError('minlength') && editPostForm.get('book_isbn').touched">
+                Minimum 10 digits.
+              </ion-label>
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('book_isbn').hasError('maxlength') && editPostForm.get('book_isbn').touched">
+                Maximum 13 digits.
+              </ion-label>
+            </ion-item>
+            
+            <!-- Book Author -->
+            <ion-item>
+              <ion-label position="floating">Author (optional)</ion-label>
+              <ion-input
+                type="text"
+                formControlName="book_author"
+                name="book_author"
+                maxlength="30"
+                [(ngModel)]="postAuthor"
+              ></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="editPostForm.get('book_author').hasError('maxlength') && editPostForm.get('book_author').touched">
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('book_author').hasError('maxlength') && editPostForm.get('book_author').touched">
+                Maximum 13 digits.
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-list>
+            <h2>Post info</h2>
+
+            <!-- Book/post Price -->
+            <ion-item>
+              <ion-label position="floating">Price</ion-label>
+              <ion-input
+                type="text"
+                formControlName="price"
+                name="price"
+                [(ngModel)]="postPrice"
+              ></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="editPostForm.get('price').hasError('required') && editPostForm.get('price').touched">
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('price').hasError('required') && editPostForm.get('price').touched">
+                You must enter a price or 0.
+              </ion-label>
+            </ion-item>
+            
+            <!-- Book/post Description -->
+            <ion-item>
+              <ion-label position="floating">Description</ion-label>
+              <ion-input
+                type="text"
+                formControlName="description"
+                name="description"
+                minlength="10"
+                maxlength="200"
+                [(ngModel)]="postDescription"
+              ></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="(editPostForm.get('description').hasError('required') || editPostForm.get('description').hasError('minlength') || editPostForm.get('description').hasError('maxlength')) && editPostForm.get('price').touched">
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('description').hasError('required') && editPostForm.get('description').touched">
+                You must enter a description for your post!
+              </ion-label>
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('description').hasError('minlength') && editPostForm.get('description').touched">
+                Minimum 10 characters.
+              </ion-label>
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editPostForm.get('description').hasError('maxlength') && editPostForm.get('description').touched">
+                Maximum 200 characters.
+              </ion-label>
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <!-- Images Row -->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-list>
+            <!-- Images  -->
+            <h2>Images (up to 4)</h2>
+            <ion-list *ngIf="images">
+              <ion-item *ngFor="let image of images; index as pos">
+                <ion-thumbnail slot="start">
+                  <img [src]="image | safeUrl" />
+                </ion-thumbnail>
+
+                <ion-button slot="end" fill="clear" (click)="removeImage(pos)" [disabled]="!image">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-list>
+            <ion-list *ngIf="!images || images.length == 0">
+              <ion-item *ngFor="let i of [].constructor(4)">
+                <ion-thumbnail slot="start">
+                  <img/>
+                </ion-thumbnail>
+
+                <ion-button slot="end" fill="clear" disabled="true">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-list>
+            <ion-button fill="clear" expand="full" (click)="pickImage()" [disabled]="!canAddMoreImages()">
+              <ion-icon name="camera" slot="start"></ion-icon>Pick image</ion-button>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <!-- Submit Row -->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="editPostForm.invalid || !images || images.length == 0">Update my post!</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

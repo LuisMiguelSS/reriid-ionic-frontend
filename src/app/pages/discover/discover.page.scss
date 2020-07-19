@@ -1,0 +1,53 @@
+/* Masonry Collection */
+.collection {
+  perspective: 1;
+  -moz-perspective: 1;
+  -webkit-perspective: 1;
+
+  @media (max-width: 779px) and (min-width: 0px) {
+    column-count: 2;
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+  }
+  @media (max-width: 1039px) and (min-width: 780px) {
+    column-count: 3;
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+  }
+  @media (max-width: 1299px) and (min-width: 1040px) {
+    column-count: 4;
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+  }
+  @media (min-width: 1300px) {
+    column-count: 5;
+    -moz-column-count: 5;
+    -webkit-column-count: 5;
+  }
+}
+
+.collection-item {
+  display: inline-block;
+  border-radius: 5;
+  cursor: zoom-in;
+
+  img {
+    border-radius: 3px;
+    height: auto;
+    width: 100%;
+  }
+
+  @media (max-width: 779px) and (min-width: 0px) {
+    max-width: 40vw;
+  }
+  @media (max-width: 1039px) and (min-width: 780px) {
+    max-width: 30vw;
+  }
+  @media (max-width: 1299px) and (min-width: 1040px) {
+    max-width: 20vw;
+  }
+  @media (min-width: 1300px) {
+    max-width: 10vw;
+  }
+
+}

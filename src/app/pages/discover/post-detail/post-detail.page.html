@@ -1,0 +1,70 @@
+<ion-header translucent class="ion-no-border">
+  <ion-toolbar translucent class="ion-no-border">
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/p/discover"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="data">
+
+    <!-- Slider if post has multiple images -->
+    <ion-slides *ngIf="data.images && data.images.length > 0" pager style="max-height: 43vh;">
+      <ion-slide *ngFor="let image of data.images">
+        <img [src]="image | safeUrl"/>
+      </ion-slide>
+    </ion-slides>
+
+    <ion-grid class="ion-padding-horizontal ion-padding-bottom">
+      <ion-row>
+        <ion-col size="9">
+          <h2>{{data.book_title}}</h2>
+        </ion-col>
+        <ion-col size="3">
+          <h2>{{data.book_price? (data.book_price == 0? 'Gratis' : data.book_price + '€') : 'Gratis'}}</h2>
+        </ion-col>
+      </ion-row>
+      <h3 *ngIf="data.book_subtitle">{{data.book_subtitle}}</h3>
+      <ion-item-divider></ion-item-divider>
+      <ion-row *ngIf="data.book_synopsis">
+        <div>
+          <h3>About the book</h3>
+          <p>{{data.book_synopsis}}</p>
+        </div>
+      </ion-row>
+      <ion-item-divider *ngIf="!data.book_isbn && !data.book_author"></ion-item-divider>
+      <ion-row *ngIf="data.book_isbn || data.book_author">
+        <div *ngIf="data.book_isbn">
+          <strong>Book ISBN:</strong>
+          {{data.book_isbn}}
+        </div>
+        <div *ngIf="data.book_author">
+          <strong>Author:</strong>
+          {{data.book_author}}
+        </div>
+      </ion-row>
+      <ion-row>
+        <div>
+          <h3>Description</h3>
+          <p>{{data.description}}</p>
+        </div>
+      </ion-row>
+    </ion-grid>
+    
+    <!-- Contact button -->
+    <ion-button color="primary" expand="block" shape="round" class="" (click)="contactOwner(user.username)">
+      <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
+      Contact
+    </ion-button>
+
+  </div>
+  <div *ngIf="!data">
+    Nada por el momento
+  </div>
+</ion-content>

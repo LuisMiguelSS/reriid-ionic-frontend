@@ -1,0 +1,70 @@
+
+<ion-header translucent>
+  <!-- Searchbar -->
+  <ion-searchbar
+    autoComplete="on"
+    placeholder="Mars, Romancero Gitano..."
+    debounce="400"
+    animated
+    (ionChange)="filterItems($event)"
+    [(ngModel)]="searchValue"></ion-searchbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- List of Posts in Masonry style -->
+  <div class="collection ion-padding" *ngIf="allPosts && allPosts.length > 0">
+    <ion-card class="collection-item" text-center *ngFor="let postPreview of allPosts;" (click)="viewPost(postPreview.post_id)">
+      <img style="min-height: 120px;" [src]="postPreview.thumbnail | safeUrl" />
+      <ion-card-header>
+        <ion-card-subtitle>{{postPreview.distance}} m away</ion-card-subtitle>
+
+        <ion-row class="ion-align-items-baseline">
+          <ion-col size="9">
+            <ion-card-title>{{postPreview.post_title}}</ion-card-title>
+          </ion-col>
+          <ion-col size="3">
+            <span item-end>{{postPreview.price? (postPreview.price.includes('0')? '0€' : postPreview.price) : '0€'}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+  <!-- Skeleton -->
+  <div class="collection ion-padding" *ngIf="!stoppedLoadingPosts && (!allPosts || allPosts.length === 0)">
+    <ion-card class="collection-item" style="width: 80%;" text-center *ngFor="let i of [].constructor(12)">
+      <ion-thumbnail style="width: 100%; height: 120px;">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-card-header>
+        <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+      </ion-card-header>
+      <ion-card-title>
+        <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+      </ion-card-title>
+    </ion-card>
+  </div>
+
+  <!-- Empty message -->
+  <div class="ion-padding" *ngIf="stoppedLoadingPosts && (!allPosts || allPosts.length === 0)">
+    Oops! This seems to be empty!
+  </div>
+
+  <!-- Scroll -->
+  <ion-infinite-scroll threshold="20%" position="bottom" (ionInfinite)="loadNewPosts($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Looking for awesome books...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- Add Post Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openNewPost()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
