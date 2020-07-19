@@ -1,0 +1,83 @@
+<ion-content class="auth-bg">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="vertically-centered">
+    <form novalidate (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="auth-form">
+      <ion-img src="../../../assets/images/logo-transparent.png" class="auth-logo"></ion-img>
+      
+      <h3>Login</h3>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+            <ion-list>
+
+              <!-- Email/username -->
+              <ion-item>
+                <ion-label position="floating">
+                  {{ 'AUTH.email_or_username' | translate }}
+                </ion-label>
+                <ion-input type="text" formControlName="emailUsername" name="emailUsername"
+                  (ionChange)="onUsernameOrEmailChange($event.target.value)">
+                </ion-input>
+                <ion-icon slot="end" class="ion-align-self-center"
+                  *ngIf="loginForm.get('emailUsername').valid"
+                  [color]="userExists? 'success' : 'danger'"
+                  [name]="userExists? 'checkmark-circle-outline' : 'close-outline'">
+                </ion-icon>
+              </ion-item>
+
+              <ion-item lines="none" *ngIf="loginForm.get('emailUsername').hasError('required') && loginForm.get('emailUsername').touched">
+                <ion-label class="ion-text-wrap" color="danger" *ngIf="loginForm.get('emailUsername').hasError('required') && loginForm.get('emailUsername').touched">
+                  Please input your username or email.
+                </ion-label>
+              </ion-item>
+
+              <!-- Password -->
+              <ion-item>
+                <ion-label position="floating">{{ 'AUTH.password' | translate}}</ion-label>
+                <ion-input
+                [type]="showPassword? 'text' : 'password'"
+                  formControlName="password"
+                  name="password"
+                ></ion-input>
+                <ion-icon slot="end" class="ion-align-self-center"
+                  [name]="showPassword? 'eye-off' : 'eye'"
+                  (click)="showPassword = !showPassword">
+                </ion-icon>
+              </ion-item>
+
+              <ion-item lines="none" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
+                <ion-label class="ion-text-wrap" color="danger" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
+                  Please input your password.
+                </ion-label>
+              </ion-item>
+
+              <ion-item lines="none">
+                <ion-checkbox slot="start" formControlName="rememberMe" name="rememberMe" [(ngModel)]="rememberMe"></ion-checkbox>
+                <ion-label>Remember me for 30 days</ion-label>
+              </ion-item>
+
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+
+            <!-- Go To Register -->
+            <ion-button type="button" color="primary" fill="clear" expand="block" (click)="goToRegister()">
+              {{ 'AUTH.have_no_account' | translate }}
+            </ion-button>
+
+            <!-- Log In-->
+            <ion-button type="submit" color="primary" expand="block" [disabled]="!loginForm.valid">
+              {{ 'AUTH.login' | translate }}
+            </ion-button>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+</ion-content>

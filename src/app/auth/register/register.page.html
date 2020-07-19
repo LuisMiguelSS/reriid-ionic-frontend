@@ -1,0 +1,196 @@
+<ion-content class="auth-bg">
+
+  <div class="vertically-centered">
+    <form novalidate (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="auth-form">
+      
+      <ion-img src="../../../assets/images/logo-transparent.png" class="auth-logo"></ion-img>
+      
+      <h3>Register</h3>
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-list>
+
+                <!-- Username -->
+                <ion-item>
+
+                  <ion-label position="floating">
+                    {{ 'AUTH.username' | translate }}
+                  </ion-label>
+
+                  <ion-input type="text" formControlName="username" name="username" maxlength="15"
+                    (ionChange)="onUsernameChange($event.target.value)">
+                  </ion-input>
+
+                  <ion-icon slot="end" class="ion-align-self-center"
+                    *ngIf="registerForm.get('username').valid"
+                    [color]="usernameAvailable? 'success' : 'danger'"
+                    [name]="usernameAvailable? 'checkmark-circle-outline' : 'close-outline'">
+                  </ion-icon>
+
+                </ion-item>
+                <ion-item lines="none" *ngIf="(registerForm.get('username').hasError('minlength') || registerForm.get('username').hasError('maxlength') || registerForm.get('username').hasError('pattern') || registerForm.get('username').hasError('required')) && registerForm.get('username').touched">
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('username').hasError('required') && registerForm.get('username').touched">
+                    Please input your username.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('username').hasError('minlength') && registerForm.get('username').touched">
+                    Minimum 4 characters.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('username').hasError('maxlength') && registerForm.get('username').touched">
+                    Maximum 15 characters.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('username').hasError('pattern') && registerForm.get('username').touched">
+                    You can only use alphabet characters, numbers and "_", "-" or ".".
+                  </ion-label>
+                </ion-item>
+
+                <!-- Fullname -->
+                <ion-item>
+                  <ion-label position="floating">{{ 'AUTH.fullname' | translate}}</ion-label>
+                  <ion-input
+                    type="text"
+                    formControlName="fullname"
+                    name="fullname"
+                  ></ion-input>
+                </ion-item>
+                <ion-item  *ngIf="(registerForm.get('fullname').hasError('minlength') || registerForm.get('fullname').hasError('maxlength') || registerForm.get('fullname').hasError('pattern') || registerForm.get('fullname').hasError('required')) && registerForm.get('fullname').touched">
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('fullname').hasError('required') && registerForm.get('fullname').touched">
+                    Please input your fullname.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('fullname').hasError('minlength') && registerForm.get('fullname').touched">
+                    Minimum 3 characters.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('fullname').hasError('maxlength') && registerForm.get('fullname').touched">
+                    Maximum 60 characters.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('fullname').hasError('pattern') && registerForm.get('fullname').touched">
+                    You can only use alphabet characters and spaces.
+                  </ion-label>
+                </ion-item>
+
+                <!-- Birthdate -->
+                <ion-item>
+                  <ion-label>{{ 'AUTH.birthdate' | translate }}</ion-label>
+                  <ion-datetime
+                    displayFormat="YYYY-MM-DD"
+                    placeholder="{{ 'AUTH.select_birthdate' | translate }}"
+                    doneText="{{ 'ACTIONS.done' | translate }}"
+                    cancelText="{{ 'ACTIONS.cancel' | translate }}"
+                    formControlName="birthdate"
+                    name="birthdate">
+                  </ion-datetime>
+                </ion-item>
+                <ion-item lines="none" *ngIf="registerForm.get('birthdate').hasError('required') && registerForm.get('birthdate').touched">
+                  <ion-label>
+                    Please input your birthdate.
+                  </ion-label>
+                </ion-item>
+                
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-list>
+
+                <!-- E-mail -->
+                <ion-item>
+                  <ion-label position="floating">{{ 'AUTH.email' | translate }}</ion-label>
+                  <ion-input
+                    type="email"
+                    email
+                    formControlName="email"
+                    name="email"
+                    (ionChange)="onEmailChange($event.target.value)"
+                  ></ion-input>
+                  <ion-icon
+                    *ngIf="registerForm.get('email').valid"
+                    slot="end"
+                    [name]="emailAvailable? 'checkmark-circle-outline' : 'close-outline'"
+                    [color]="emailAvailable? 'success' : 'danger'"
+                    class="ion-align-self-center"
+                    ></ion-icon>
+                </ion-item>
+                <ion-item lines="none" *ngIf="(registerForm.get('email').hasError('email') || registerForm.get('email').hasError('required')) && registerForm.get('email').touched">
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('email').hasError('required') && registerForm.get('email').touched">
+                    Please input your email address.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('email').hasError('email') && registerForm.get('email').touched">
+                    You must enter a valid email address.
+                  </ion-label>
+                </ion-item>
+                
+                <!-- Password -->
+                <ion-item>
+                  <ion-label position="floating">{{ 'AUTH.password' | translate}}</ion-label>
+                  <ion-input
+                  [type]="showPassword? 'text' : 'password'"
+                    formControlName="password"
+                    name="password"
+                  ></ion-input>
+                  <ion-icon slot="end" class="ion-align-self-center"
+                    [name]="showPassword? 'eye-off' : 'eye'"
+                    (click)="showPassword = !showPassword">
+                  </ion-icon>
+                </ion-item>
+                <ion-item lines="none" *ngIf="(registerForm.get('password').hasError('minlength') || registerForm.get('password').hasError('maxlength') || registerForm.get('password').hasError('pattern') || registerForm.get('password').hasError('required')) && registerForm.get('password').touched">
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">
+                    Please input your password.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">
+                    Minimum 8 characters.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">
+                    Maximum 25 characters.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('password').hasError('pattern') && registerForm.get('password').touched">
+                    Your password should only contain letters and numbers.
+                  </ion-label>
+                </ion-item>
+
+                <!-- Password Confirmation -->
+                <ion-item>
+                  <ion-label position="floating">{{ 'AUTH.password_confirm' | translate}}</ion-label>
+                  <ion-input
+                    [type]="showConfirmPassword? 'text' : 'password'"
+                    formControlName="confirmPassword"
+                    name="confirmPassword"
+                  ></ion-input>
+                  <ion-icon
+                    slot="end" class="ion-align-self-center"
+                    [name]="showConfirmPassword? 'eye-off' : 'eye'"
+                    (click)="showConfirmPassword = !showConfirmPassword">
+                  </ion-icon>
+                </ion-item>
+                <ion-item lines="none" *ngIf="(registerForm.get('confirmPassword').hasError('required') || registerForm.get('confirmPassword').value != registerForm.get('password').value) && registerForm.get('confirmPassword').touched">
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('confirmPassword').hasError('required')">
+                    Please input your confirmation password.
+                  </ion-label>
+                  <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('confirmPassword').value != registerForm.get('password').value && !registerForm.get('confirmPassword').hasError('required')">
+                    Passwords don't match.
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-button
+                type="button"
+                color="primary"
+                fill="clear"
+                expand="block"
+                (click)="goToLogin()">{{ 'AUTH.have_account' | translate }}</ion-button>
+              <ion-button
+                type="submit"
+                color="primary"
+                expand="block"
+                [disabled]="registerForm.invalid || !usernameAvailable || !emailAvailable">{{ 'AUTH.register' | translate }}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+  </div>
+
+</ion-content>
