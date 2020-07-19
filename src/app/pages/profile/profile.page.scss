@@ -1,0 +1,44 @@
+
+ion-slides {
+    background-color: #f3f6f8;
+
+    ion-slide {
+        max-height: 25vh;
+        img {
+            height: 100%;
+        }
+    }
+}
+
+ion-item-divider{
+    margin-top: 0px;
+    min-height: 1px!important;
+    margin-bottom: 5px;
+}
+
+ion-avatar {
+    width: 40vw;
+    height: 40vw;
+    margin: 0 auto;
+}
+
+ion-avatar + ion-button {
+    position: absolute;
+    top: 35%;
+    left: 49.5%;
+    transform: translate(-50%,-50%);
+    opacity: .7;
+}
+
+.username {
+    font-size: 24px;
+    font-weight: 600;
+    color: #303940;
+    margin: 0 auto;
+}
+.date {
+    font-size: 90%;
+    color: #949ea6;
+    text-transform: uppercase;
+    margin: 0 auto;
+}

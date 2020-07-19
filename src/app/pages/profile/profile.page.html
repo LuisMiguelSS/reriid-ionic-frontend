@@ -1,0 +1,119 @@
+
+<ion-header translucent no-border>
+  <ion-toolbar translucent no-border>
+    <ion-title>Your Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openOptions($event)">
+        <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <form novalidate (ngSubmit)="onSubmit()" [formGroup]="editProfileForm">
+    <ion-grid>
+
+      <!-- Basic User Info -->
+      <ion-row>
+        <ion-col class="ion-padding-top ion-margin-top">
+          <ion-avatar>
+            <img class="" [src]="newImage? 'data:image/jpeg;base64,' + newImage : (user && user.profile_pic? (user.profile_pic | safeUrl) : '../../../assets/images/default-profile.png')" alt="Profile Picture" />
+          </ion-avatar>
+          <ion-button (click)="pickImage()" color="light">
+            <ion-icon slot="icon-only" [name]="newImage? 'trash': 'camera'" [color]="newImage? 'danger':''"></ion-icon>
+          </ion-button>
+          <h3 class="username ion-text-center ion-padding">{{user.username}}</h3>
+          <h5 class="date ion-text-center">Since {{user.created_at | date}}</h5>
+        </ion-col>
+      </ion-row>
+
+      <!-- Posts -->
+      <ion-row>
+        <ion-col>
+          <h3>Your posts
+            <ion-chip>
+              <ion-label>{{userPosts && userPosts.length? userPosts.length : 0}}</ion-label>
+            </ion-chip>
+          </h3>
+          <ion-item-divider></ion-item-divider>
+          <ion-slides pager="true" [options]="sliderOptions" *ngIf="userPosts && userPosts.length > 0">
+            <ion-slide *ngFor="let post of userPosts" (click)="viewPost(post.id)">
+              <img [src]="post.images[0] | safeUrl"/>
+            </ion-slide>
+          </ion-slides>
+          <h5 class="ion-padding" *ngIf="!userPosts || userPosts.length <= 0">You haven't posted anything yet!</h5>
+        </ion-col>
+      </ion-row>
+
+      <!-- Profile/Account info -->
+      <ion-row>
+        <ion-col>
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="9">
+                <h3>Account information</h3>
+              </ion-col>
+              <ion-col size="3">
+                <ion-button type="submit" size="small" color="light">Update</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-item-divider></ion-item-divider>
+
+          <ion-list *ngIf="user">
+
+            <!-- Fullname -->
+            <ion-item>
+              <ion-label position="stacked">{{ 'AUTH.fullname' | translate}}</ion-label>
+              <ion-input
+                type="text"
+                formControlName="fullname"
+                name="fullname"
+                [(ngModel)]="fullnameField"
+              ></ion-input>
+            </ion-item>
+            <ion-item  *ngIf="(editProfileForm.get('fullname').hasError('minlength') || editProfileForm.get('fullname').hasError('maxlength') || editProfileForm.get('fullname').hasError('pattern')) && editProfileForm.get('fullname').touched">
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editProfileForm.get('fullname').hasError('minlength') && editProfileForm.get('fullname').touched">
+                Minimum 3 characters.
+              </ion-label>
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editProfileForm.get('fullname').hasError('maxlength') && editProfileForm.get('fullname').touched">
+                Maximum 60 characters.
+              </ion-label>
+              <ion-label class="ion-text-wrap" color="danger" *ngIf="editProfileForm.get('fullname').hasError('pattern') && editProfileForm.get('fullname').touched">
+                You can only use alphabet characters and spaces.
+              </ion-label>
+            </ion-item>
+
+            <!-- Birthdate -->
+            <ion-item>
+              <ion-label>{{ 'AUTH.birthdate' | translate }}</ion-label>
+              <ion-datetime
+                displayFormat="YYYY-MM-DD"
+                [placeholder]="user.date_of_birth.getFullYear() + '-' + (user.date_of_birth.getMonth()+1) + '-' + user.date_of_birth.getDate()"
+                doneText="{{ 'ACTIONS.done' | translate }}"
+                cancelText="{{ 'ACTIONS.cancel' | translate }}"
+                formControlName="birthdate"
+                name="birthdate">
+              </ion-datetime>
+            </ion-item>
+            <ion-item lines="none" *ngIf="editProfileForm.get('birthdate').hasError('required') && editProfileForm.get('birthdate').touched">
+              <ion-label>
+                Please input your birthdate.
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+          <h5 *ngIf="!user">No account info loaded.</h5>
+        </ion-col>
+      </ion-row>
+      
+    </ion-grid>
+  </form>
+  
+</ion-content>
