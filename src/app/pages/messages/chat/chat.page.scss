@@ -1,0 +1,21 @@
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    white-space: pre-wrap;
+    color: #fff;
+}
+
+.other-user {
+    background: var(--ion-color-secondary);
+}
+
+.my-user {
+    background: var(--ion-color-primary);
+}
+
+.time {
+    color: #dfdfdf;
+    float: right;
+    font-size: small;
+}

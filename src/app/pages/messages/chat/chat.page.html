@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/p/messages"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start" class="ion-padding">
+      <ion-img [src]="getTalkingWithUser().thumbnail? getTalkingWithUser().thumbnail : '../../../assets/images/default-profile.png'"></ion-img>
+    </ion-avatar>
+    <ion-title>{{getTalkingWithUser().username}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let message of messages">
+
+      <ion-col size="9" *ngIf="message.sender == getTalkingWithUser().username" class="message other-user">
+        <b>{{message.sender}}</b><br>
+        <span>{{message.content}}</span>
+        <div class="time" text-right>
+          <br>
+          {{message.sentAt | date:'short'}}
+        </div>
+      </ion-col>
+
+      <ion-col offset="3" size="9" *ngIf="message.sender === getUsername()" class="message my-user">
+        <b>{{message.sender}}</b><br>
+        <span>{{message.content}}</span>
+        <div class="time" text-right>
+          <br>
+          {{message.sentAt | date:'short'}}
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="9">
+        <ion-textarea auto-grow rows="1" [(ngModel)]="currentMessage"></ion-textarea>
+      </ion-col>
+      <ion-col size="3">
+        <ion-button color="primary" (click)="sendMessage()" [disabled]="currentMessage? 'false' : 'true'">
+          <ion-icon name="send"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
