@@ -8,22 +8,21 @@ const LANGUAGE_KEY = 'SELECTED_LANGUAGE';
   providedIn: 'root'
 })
 export class LanguageService {
-  selected = '';
+  currentLanguageCode: string = '';
 
   constructor(
-    private translate: TranslateService,
+    private translatorService: TranslateService,
     private storage: Storage
   ) { }
 
-    setInitialAppLanguage() {
-      const language = this.translate.getBrowserLang();
-      this.translate.setDefaultLang(language);
+    setInitialAppLanguage(): void {
+      this.translatorService.setDefaultLang(
+        this.translatorService.getBrowserLang()
+      );
 
-      this.storage.get(LANGUAGE_KEY).then(val => {
-        if (val) {
-          this.setLanguage(val);
-          this.selected = val;
-        }
+      this.storage.get(LANGUAGE_KEY).then( (language: string) => {
+        if (language)
+          this.setLanguage(language);
       });
     }
 
@@ -34,10 +33,14 @@ export class LanguageService {
       ];
     }
 
-    setLanguage(language) {
-      this.translate.use(language);
-      this.selected = language;
-      this.storage.set(LANGUAGE_KEY, language);
+    setLanguage(languageCode: string): void {
+      this.translatorService.use(languageCode);
+      this.currentLanguageCode = languageCode;
+      this.storage.set(LANGUAGE_KEY, languageCode);
+    }
+
+    getCurrentLanguage(): string {
+      return this.currentLanguageCode;
     }
 
 }
