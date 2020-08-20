@@ -29,7 +29,7 @@ export class PopsettingsComponent implements OnInit {
     this.alertService.showAlertDialog(
       'Delete Account?',
       'Are you sure you want to <strong>delete</strong> your account? ' +
-      'You will still be able to recover it before <strong>30 days from now</strong>.',
+      'You will still be able to recover it before <strong>30 days from now</strong> by logging in again.',
       [
         {
           text: 'Cancel',
@@ -43,8 +43,10 @@ export class PopsettingsComponent implements OnInit {
               this.alertService.showToast('We\'re sorry to see you go :(', 4000);
               this.logout();
               this.route.navigate(['login']);
+
             }).catch(_ => {
               this.alertService.showToast('We couldn\'t delete your account :(', 3000);
+              
             }).finally( () => this.dismiss());
           }
         }
