@@ -39,13 +39,12 @@ export class WebsocketService {
   public connect(url: string): Rx.Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
-      console.log('Successfully connect to the WebsocketServer: ' + url);
     }
 
     return this.subject;
   }
 
-  private create(url): Rx.Subject<MessageEvent> {
+  private create(url: string): Rx.Subject<MessageEvent> {
     const ws = new WebSocket(url);
 
     const observable = new Rx.Observable(
@@ -64,7 +63,7 @@ export class WebsocketService {
           ws.send(JSON.stringify(data));
         }
       },
-      error: err => console.log(err),
+      error: (error: any) => console.log(error),
       complete: () => {}
     };
 
