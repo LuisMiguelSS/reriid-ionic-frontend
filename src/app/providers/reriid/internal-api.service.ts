@@ -22,25 +22,16 @@ export class InternalAPIService {
     private geopos: Geolocation
   ) { }
 
-  getUser(loginToken: string) {
-    return  this.http.get(this.baseURL + 'auth/user?api_key=' + this.apiKey,
-        { headers: {Authorization: 'Bearer ' + loginToken} }
-    );
+  getUser(token: string) {
+    return this.getWithAuth(token, 'auth/user');
   }
 
   getUserById(token: string, id: number) {
-    return  this.http.get(this.baseURL + 'users/' + id + '?api_key=' + this.apiKey,
-        { headers: {Authorization: 'Bearer ' + token} }
-    );
+    return this.getWithAuth(token, 'users/' + id);
   }
 
   logInUsingToken(token: string) {
-    const data = new FormData();
-    data.append('api_key', this.apiKey);
-
-    return this.http.post(this.baseURL + 'login', data,
-        { headers: {Authorization: 'Bearer ' + token} }
-    );
+    return this.postWithAuth(token, 'login');
   }
 
   logIn(login: string, password: string, rememberUser: boolean = false) {
@@ -53,13 +44,8 @@ export class InternalAPIService {
     return this.http.post(this.baseURL + 'auth/login', data);
   }
 
-  logOut(userToken: string) {
-    const data = new FormData();
-    data.append('api_key', this.apiKey);
-
-    return  this.http.post(this.baseURL + 'auth/logout', data,
-        { headers: {Authorization: 'Bearer ' + userToken} }
-    );
+  logOut(token: string) {
+    return this.postWithAuth(token, 'auth/logout');
   }
 
   deleteAccount(token: string, accountId: number) {
@@ -112,6 +98,7 @@ export class InternalAPIService {
     birthdate?: Date,
     profilePicture?: any,
     lat?: number, long?: number): Observable<any> {
+
     const data = new FormData();
 
     if (fullname) {
@@ -137,10 +124,8 @@ export class InternalAPIService {
     if (long) {
       data.append('long', long + '');
     }
-    data.append('api_key', this.apiKey);
 
-    return this.http.post(this.baseURL + 'users/' + id, data,
-      { headers: {Authorization: 'Bearer ' + token}});
+    return this.postWithAuth(token, 'users/' + id, data);
   }
 
   usernameExists(username: string) {
@@ -188,30 +173,25 @@ export class InternalAPIService {
         if (nextPageUrl) {
           requestUrl = nextPageUrl;
         } else {
-          requestUrl = this.baseURL + 'auth/posts/nearby?lat=' + lat +
-                       '&long=' + long +
-                       '&api_key=' + this.apiKey;
+          requestUrl = 'auth/posts/nearby?lat=' + lat + '&long=' + long;
         }
 
-        this.http.get(requestUrl, { headers: {Authorization: 'Bearer ' + token}}).toPromise().then(result => {
+        this.getWithAuth(token, requestUrl).toPromise().then((result: any) => {
           resolve(result);
         });
 
-      }).catch(e => reject(e));
+      }).catch((e: any) => reject(e));
     });
   }
 
   getPost(token: string, id: number) {
-    return  this.http.get(this.baseURL + 'posts/' + id + '?api_key=' + this.apiKey,
-        { headers: {Authorization: 'Bearer ' + token} }
-    );
+    return this.getWithAuth(token, 'posts/' + id);
   }
 
   getUserPosts(token: string, userId: number) {
-    return  this.http.get(this.baseURL + 'posts/user/' + userId + '?api_key=' + this.apiKey,
-        { headers: {Authorization: 'Bearer ' + token} }
-    );
+    return this.getWithAuth(token, 'posts/user/' + userId);
   }
+
   editPost(token: string,
            postId: number,
            userId: number,
@@ -226,18 +206,16 @@ export class InternalAPIService {
     ) {
 
     const data = new FormData();
-    data.append('api_key', this.apiKey);
     data.append('user_id', userId + '');
     data.append('description', description);
 
     images.forEach((image, index) => {
-      if (image.includes('http')) {
-        console.log('It does');
+
+      if (image.includes('http'))
         data.append('images[]', image);
-      } else {
-        console.log('It doesn\'t: ' + image);
+      else
         data.append('images[]', this.getBlob(image, '.png'), 'myImage' + index + '.png');
-      }
+
     });
     data.append('book_title', bookTitle);
     data.append('price', price + '');
@@ -255,9 +233,7 @@ export class InternalAPIService {
     data.append('book_author', bookAuthor);
     }
 
-
-    return this.http.post(this.baseURL + 'posts/' + postId, data,
-      { headers: {Authorization: 'Bearer ' + token} });
+    return this.postWithAuth(token, 'posts/' + postId, data);
 
   }
 
@@ -274,7 +250,6 @@ export class InternalAPIService {
           ) {
 
     const data = new FormData();
-    data.append('api_key', this.apiKey);
     data.append('user_id', userId + '');
     data.append('description', description);
 
@@ -295,16 +270,14 @@ export class InternalAPIService {
       data.append('book_author', bookAuthor);
     }
 
-
-    return this.http.post(this.baseURL + 'posts/create', data,
-        { headers: {Authorization: 'Bearer ' + token} });
+    return this.postWithAuth(token, 'posts/create', data);
 
   }
 
-  private getBlob(b64Data: string, contentType: string, sliceSize: number= 512) {
+  private getBlob(base64Data: string, contentType: string, sliceSize: number = 512) {
     contentType = contentType || '';
     sliceSize = sliceSize || 512;
-    const byteCharacters = atob(b64Data);
+    const byteCharacters = atob(base64Data);
     const byteArrays = [];
 
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -319,8 +292,30 @@ export class InternalAPIService {
 
         byteArrays.push(byteArray);
     }
-    const blob = new Blob(byteArrays, {type: contentType});
-    return blob;
+
+    return new Blob(byteArrays, {type: contentType});
+  }
+
+  private postWithAuth(userToken: string, path: string, data: FormData = new FormData()) {
+    const formData = data;
+    formData.append('api_key', this.apiKey);
+
+    return this.http.post(this.baseURL + path, formData,
+      {
+        headers: {
+          Authorization: 'Bearer ' + userToken
+        }
+      });
+  }
+
+  private getWithAuth(userToken: string, query: string) {
+    return this.http.get(this.baseURL + query + '?api_key=' + this.apiKey,
+        { 
+          headers: {
+            Authorization: 'Bearer ' + userToken
+          }
+        }
+    );
   }
 
 }
