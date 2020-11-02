@@ -1,0 +1,41 @@
+{
+    "HOME": {
+        "title": "Inicio"
+    },
+    "AUTH": {
+        "login": "Inicia sesión",
+        "register": "Regístrate",
+        "username": "Nombre de usuario",
+        "fullname": "Nombre completo",
+        "select_birthdate": "Seleccionar fecha",
+        "birthdate": "Fecha de nacimiento",
+        "email": "E-mail",
+        "email_or_username": "E-mail o nombre de usuario",
+        "password": "Contraseña",
+        "password_confirm": "Confirmar contraseña",
+        "have_no_account": "¿Todavía no tienes cuenta?",
+        "have_account": "¿Ya tienes cuenta?",
+        "remember_me": "Recuérdame por {{days}} días"
+    },
+    "USER_ERRORS": {
+        "empty": "¡No puede estar vacío!",
+        "invalid_email": "Debe ser una dirección válida. (Ej.: miEmail@sitio.guay)",
+        "invalid_username": "¡Ese nombre de usuario no es válido!",
+        "invalid_length": "Debe tener al menos {{passwordLength}} caracteres.",
+        "password_no_match": "¡Las contraseñas no coinciden!",
+        "input_field": "Por favor, introduce {{field}}"
+    },
+    "INPUT_FIELDS": {
+        "username": "tu nombre de usuario",
+        "username_or_email": "tu nombre de usuario o email",
+        "fullname": "tu nombre completo",
+        "birthdate": "tu fecha de nacimiento",
+        "email": "tu correo electrónico",
+        "password": "tu contraseña",
+        "confirmation_password": "tu confirmación de contraseña"
+    },
+    "ACTIONS": {
+        "done": "Hecho",
+        "cancel": "Cancelar"
+    }
+}

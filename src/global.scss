@@ -42,6 +42,7 @@ ion-picker, .open_picker {
     width: 70vw;
     margin: 0 auto;
     padding: 20px 0;
+    max-width: 800px;
 }
 .auth-bg {
     --background: radial-gradient(circle, rgba(345, 81, 97, .1), rgba(345, 81, 97, .2)), url("./assets/images//books-1245690_1920.jpg");

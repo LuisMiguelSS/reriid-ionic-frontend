@@ -8,7 +8,7 @@ const LANGUAGE_KEY = 'SELECTED_LANGUAGE';
   providedIn: 'root'
 })
 export class LanguageService {
-  currentLanguageCode: string = '';
+  currentLanguageCode = '';
 
   constructor(
     private translatorService: TranslateService,
@@ -21,8 +21,9 @@ export class LanguageService {
       );
 
       this.storage.get(LANGUAGE_KEY).then( (language: string) => {
-        if (language)
+        if (language) {
           this.setLanguage(language);
+        }
       });
     }
 
