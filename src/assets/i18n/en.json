@@ -14,14 +14,25 @@
         "password": "Password",
         "password_confirm": "Confirm password",
         "have_no_account": "Don't have an account yet?",
-        "have_account": "Already have an account?"
+        "have_account": "Already have an account?",
+        "remember_me": "Remember me for {{days}} days"
     },
-    "ERRORS": {
+    "USER_ERRORS": {
         "empty": "This cannot be empty!",
         "invalid_email": "Should be a valid email address. (Eg.: myEmail@site.cool)",
         "invalid_username": "That username is not valid!",
         "invalid_length": "Should at least be {{passwordLength}} characters long.",
-        "password_no_match": "Passwords do not match!"
+        "password_no_match": "Passwords do not match!",
+        "input_field": "Please, type in {{field}}"
+    },
+    "INPUT_FIELDS": {
+        "username": "your username",
+        "username_or_email": "your username or email",
+        "fullname": "your fullname",
+        "birthdate": "your birthdate",
+        "email": "your email",
+        "password": "your password",
+        "confirmation_password": "your confirmation password"
     },
     "ACTIONS": {
         "done": "Done",
