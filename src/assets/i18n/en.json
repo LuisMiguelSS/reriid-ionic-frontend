@@ -13,7 +13,7 @@
         "email_or_username": "E-mail or username",
         "password": "Password",
         "password_confirm": "Confirm password",
-        "have_no_account": "Don't have an account?",
+        "have_no_account": "Don't have an account yet?",
         "have_account": "Already have an account?"
     },
     "ERRORS": {
