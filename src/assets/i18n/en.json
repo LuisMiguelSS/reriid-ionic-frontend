@@ -17,13 +17,19 @@
         "have_account": "Already have an account?",
         "remember_me": "Remember me for {{days}} days"
     },
-    "USER_ERRORS": {
+    "VALIDATION_ERRORS": {
         "empty": "This cannot be empty!",
         "invalid_email": "Should be a valid email address. (Eg.: myEmail@site.cool)",
         "invalid_username": "That username is not valid!",
         "invalid_length": "Should at least be {{passwordLength}} characters long.",
         "password_no_match": "Passwords do not match!",
-        "input_field": "Please, type in {{field}}"
+        "input_field": "Please, type in {{field}}",
+        "min_characters": "Minimum {{length}} characters",
+        "max_characters": "Maximum {{length}} characters",
+        "regex_username": "You can only use alphabet characters, numbers and \"_\", \"-\" or \".\".",
+        "regex_fullname": "You can only use alphabet characters and spaces.",
+        "regex_email": "You must enter a valid email address.",
+        "regex_password": "Your password should only contain letters and numbers."
     },
     "INPUT_FIELDS": {
         "username": "your username",

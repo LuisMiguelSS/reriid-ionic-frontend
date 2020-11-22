@@ -17,7 +17,7 @@
         "have_account": "¿Ya tienes cuenta?",
         "remember_me": "Recuérdame por {{days}} días"
     },
-    "USER_ERRORS": {
+    "VALIDATION_ERRORS": {
         "empty": "¡No puede estar vacío!",
         "invalid_email": "Debe ser una dirección válida. (Ej.: miEmail@sitio.guay)",
         "invalid_username": "¡Ese nombre de usuario no es válido!",

@@ -30,7 +30,7 @@
 
               <ion-item lines="none" *ngIf="loginForm.get('emailUsername').hasError('required') && loginForm.get('emailUsername').touched">
                 <ion-label class="ion-text-wrap" color="danger" *ngIf="loginForm.get('emailUsername').hasError('required') && loginForm.get('emailUsername').touched">
-                  {{ 'USER_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.username_or_email' | translate} }}.
+                  {{ 'VALIDATION_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.username_or_email' | translate} }}.
                 </ion-label>
               </ion-item>
 
@@ -50,7 +50,7 @@
 
               <ion-item lines="none" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
                 <ion-label class="ion-text-wrap" color="danger" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
-                  {{ 'USER_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.password' | translate} }}.
+                  {{ 'VALIDATION_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.password' | translate} }}.
                 </ion-label>
               </ion-item>
 

@@ -31,7 +31,7 @@
                 </ion-item>
                 <ion-item lines="none" *ngIf="(registerForm.get('username').hasError('minlength') || registerForm.get('username').hasError('maxlength') || registerForm.get('username').hasError('pattern') || registerForm.get('username').hasError('required')) && registerForm.get('username').touched">
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('username').hasError('required') && registerForm.get('username').touched">
-                    {{ 'USER_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.username' | translate } }}
+                    {{ 'VALIDATION_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.username' | translate } }}
                   </ion-label>
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('username').hasError('minlength') && registerForm.get('username').touched">
                     Minimum 4 characters.
@@ -55,7 +55,7 @@
                 </ion-item>
                 <ion-item  *ngIf="(registerForm.get('fullname').hasError('minlength') || registerForm.get('fullname').hasError('maxlength') || registerForm.get('fullname').hasError('pattern') || registerForm.get('fullname').hasError('required')) && registerForm.get('fullname').touched">
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('fullname').hasError('required') && registerForm.get('fullname').touched">
-                    {{ 'USER_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.fullname' | translate } }}
+                    {{ 'VALIDATION_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.fullname' | translate } }}
                   </ion-label>
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('fullname').hasError('minlength') && registerForm.get('fullname').touched">
                     Minimum 3 characters.
@@ -82,7 +82,7 @@
                 </ion-item>
                 <ion-item lines="none" *ngIf="registerForm.get('birthdate').hasError('required') && registerForm.get('birthdate').touched">
                   <ion-label class="ion-text-wrap" color="danger">
-                    {{ 'USER_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.birthdate' | translate } }}
+                    {{ 'VALIDATION_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.birthdate' | translate } }}
                   </ion-label>
                 </ion-item>
                 
@@ -113,7 +113,7 @@
                 </ion-item>
                 <ion-item lines="none" *ngIf="(registerForm.get('email').hasError('email') || registerForm.get('email').hasError('required')) && registerForm.get('email').touched">
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('email').hasError('required') && registerForm.get('email').touched">
-                    {{ 'USER_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.email' | translate } }}
+                    {{ 'VALIDATION_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.email' | translate } }}
                   </ion-label>
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('email').hasError('email') && registerForm.get('email').touched">
                     You must enter a valid email address.
@@ -135,7 +135,7 @@
                 </ion-item>
                 <ion-item lines="none" *ngIf="(registerForm.get('password').hasError('minlength') || registerForm.get('password').hasError('maxlength') || registerForm.get('password').hasError('pattern') || registerForm.get('password').hasError('required')) && registerForm.get('password').touched">
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">
-                    {{ 'USER_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.password' | translate } }}
+                    {{ 'VALIDATION_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.password' | translate } }}
                   </ion-label>
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">
                     Minimum 8 characters.
@@ -164,7 +164,7 @@
                 </ion-item>
                 <ion-item lines="none" *ngIf="(registerForm.get('confirmPassword').hasError('required') || registerForm.get('confirmPassword').value != registerForm.get('password').value) && registerForm.get('confirmPassword').touched">
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('confirmPassword').hasError('required')">
-                    {{ 'USER_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.confirmation_password' | translate } }}
+                    {{ 'VALIDATION_ERRORS.input_field' | translate: { field: 'INPUT_FIELDS.confirmation_password' | translate } }}
                   </ion-label>
                   <ion-label class="ion-text-wrap" color="danger" *ngIf="registerForm.get('confirmPassword').value != registerForm.get('password').value && !registerForm.get('confirmPassword').hasError('required')">
                     Passwords don't match.
